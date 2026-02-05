@@ -61,10 +61,12 @@ services:
       - OPENCLAW_GATEWAY_TOKEN=changeme
       # Optional: password auth instead of token
       - OPENCLAW_GATEWAY_PASSWORD=
+    user: "root"
     volumes:
-      - ./openclaw-config:/home/node/.openclaw
-      - openclaw-workspace:/home/node/.openclaw/workspace
+      - ./openclaw-config:/openclaw-config:ro
+      - openclaw-data:/home/node/.openclaw
     init: true
+    entrypoint: ["/bin/sh", "/openclaw-config/entrypoint.sh"]
     command:
       [
         "node",
@@ -79,4 +81,4 @@ services:
 
 volumes:
   claude-code-free-workspace:
-  openclaw-workspace:
+  openclaw-data:

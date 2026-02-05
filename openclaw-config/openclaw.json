@@ -29,6 +29,11 @@
       }
     }
   },
+  "gateway": {
+    "controlUi": {
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
   "agents": {
     "defaults": {
       "model": {
