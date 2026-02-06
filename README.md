@@ -1,21 +1,34 @@
 # free-the-claw
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/polats/free-the-claw?quickstart=1)
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/free-the-claw)
-
 A self-hosted AI chat setup using [openclaw](https://github.com/openclaw/openclaw) with free NVIDIA NIM models via [claude-code-free](https://github.com/Alishahryar1/claude-code-free).
 
-## Quick Start
+## Before You Begin
 
-1. Get a free NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys
+Get a free NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys
 
-2. Clone the repo:
+## Quick Start with Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/polats/free-the-claw?quickstart=1)
+
+
+The fastest way to try free-the-claw — no local install needed.
+
+1. Click the `Open in GitHub Codespaces badge` above
+2. When prompted, add your `NVIDIA_NIM_API_KEY` as a Codespaces secret
+3. Wait for the containers to build and start
+4. The gateway port (18789) auto-opens in your browser — log in with `?token=changeme`
+
+Codespaces is ephemeral and will reset after a while. To persist your data, follow the [Deploy on Railway](#deploy-on-railway) section instead.
+
+## Running Locally Via Docker
+
+1. Clone the repo:
    ```
    git clone --recurse-submodules https://github.com/polats/free-the-claw.git
    cd free-the-claw
    ```
 
-3. Copy the example env file and add your API key:
+2. Copy the example env file and add your API key:
    ```
    cp .env.example .env
    ```
@@ -25,12 +38,12 @@ A self-hosted AI chat setup using [openclaw](https://github.com/openclaw/opencla
    MODEL=stepfun-ai/step-3.5-flash
    ```
 
-4. Start the services:
+3. Start the services:
    ```
    docker compose up -d
    ```
 
-5. Open http://localhost:18789/?token=changeme in your browser.
+4. Open http://localhost:18789/?token=changeme in your browser.
 
 ## Configuration
 
@@ -50,6 +63,17 @@ See [`Claude Code Free`](claude-code-free/README.md) to add more models.
 
 - **Ports**: claude-code-free runs on `8082`, openclaw on `18789`
 
+## Deploy on Railway
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/free-the-claw)
+
+For persistent hosting, deploy on [Railway](https://railway.com) with two services from this repo. You will probably need the Hobby Plan ($5/month) as the free tier may not be enough for the image size.
+
+1. Click the **Deploy on Railway** badge above
+2. Add your NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys in the openclaw service's variables
+3. Once deployed, you should see the gateway URL on the service (similar to `https://openclaw-railway-1234567890.up.railway.app`) 
+4. Visit the URL via the browser appended with `?token=changeme` (you can change this OPENCLAW_GATEWAY_TOKEN in the openclaw service's environment variables)
+
 ## Agent Persona (optional)
 
 Give your agent a personality by loading a [SOUL.md](https://github.com/urtimus-prime/soul.md) file at startup. Add one of the following to your `.env`:
@@ -65,27 +89,3 @@ SOUL_URL=https://raw.githubusercontent.com/your-org/your-repo/main/SOUL.md
 ```
 
 If both are set, `GITHUB_SOUL_USER` takes priority. The file is fetched on every container start and written to the agent's workspace as `SOUL.md`, which openclaw automatically injects into the agent's system prompt.
-
-## Deploy with GitHub Codespaces (free)
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/polats/free-the-claw?quickstart=1)
-
-The fastest way to try free-the-claw — no local install needed.
-
-1. Click the badge above
-2. When prompted, add your `NVIDIA_NIM_API_KEY` as a Codespaces secret
-3. Wait for the containers to build and start
-4. The gateway port (18789) auto-opens in your browser — log in with `?token=changeme`
-
-The Codespace uses the same `docker-compose.yml` as local development with a thin overlay for workspace mounting and secrets.
-
-## Deploy on Railway (~$5/month)
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/free-the-claw)
-
-For persistent hosting, deploy on [Railway](https://railway.com) with two services from this repo. You will probably need the Hobby Plan ($5/month) as the free tier may not be enough for the image size.
-
-1. Click the **Deploy on Railway** badge above
-2. Add your NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys in the openclaw service's variables
-3. Once deployed, you should see the gateway URL on the service (similar to `https://openclaw-railway-1234567890.up.railway.app`) 
-4. Visit the URL via the browser appended with `?token=changeme` (you can change this OPENCLAW_GATEWAY_TOKEN in the openclaw service's environment variables)
