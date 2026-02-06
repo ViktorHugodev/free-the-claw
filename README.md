@@ -81,19 +81,7 @@ The Codespace uses the same `docker-compose.yml` as local development with a thi
 
 For persistent hosting, deploy on [Railway](https://railway.com) with two services from this repo. You will probably need the Hobby Plan ($5/month) as the free tier may not be enough for the image size.
 
-1. Click the **Deploy on Railway** badge above, or create a new project manually
-2. Add two services, both pointing to the **`deploy` branch** of this repo (a GitHub Action auto-flattens submodules into this branch on every push to main):
-
-   **claude-code-free**
-   - Dockerfile path: `Dockerfile.claude-code-free.railway`
-   - Port: `8082` (private networking only)
-   - Add your env vars: `NVIDIA_NIM_API_KEY`, `MODEL`
-
-   **openclaw**
-   - Dockerfile path: `Dockerfile.openclaw.railway`
-   - Port: `18789` (public networking)
-   - Env vars: `PROXY_URL=http://claude-code-free.railway.internal:8082`, `ANTHROPIC_API_KEY=sk-placeholder`, `OPENCLAW_GATEWAY_TOKEN=<your-token>`, `MODEL`
-   - Add a persistent volume mounted at `/home/node/.openclaw`
-
-3. Enable public networking on the openclaw service
-4. Open `https://<your-domain>.up.railway.app/?token=<your-token>`
+1. Click the **Deploy on Railway** badge above
+2. Add your NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys in the openclaw service's variables
+3. Once deployed, you should see the gateway URL on the service (similar to `https://openclaw-railway-1234567890.up.railway.app`) 
+4. Visit the URL via the browser appended with `?token=changeme` (you can change this OPENCLAW_GATEWAY_TOKEN in the openclaw service's environment variables)
