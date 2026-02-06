@@ -68,9 +68,11 @@ If both are set, `GITHUB_SOUL_USER` takes priority. The file is fetched on every
 
 ## Deploy with GitHub Codespaces (free)
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/polats/free-the-claw?quickstart=1)
+
 The fastest way to try free-the-claw — no local install needed.
 
-1. Click the **Open in GitHub Codespaces** badge above (or go to [codespaces.new/polats/free-the-claw](https://codespaces.new/polats/free-the-claw?quickstart=1))
+1. Click the badge above
 2. When prompted, add your `NVIDIA_NIM_API_KEY` as a Codespaces secret
 3. Wait for the containers to build and start
 4. The gateway port (18789) auto-opens in your browser — log in with `?token=changeme`
@@ -78,6 +80,8 @@ The fastest way to try free-the-claw — no local install needed.
 The Codespace uses the same `docker-compose.yml` as local development with a thin overlay for workspace mounting and secrets.
 
 ## Deploy on Railway (~$5/month)
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/free-the-claw)
 
 For persistent hosting, deploy on [Railway](https://railway.com) with two services from this repo. You will probably need the Hobby Plan ($5/month) as the free tier may not be enough for the image size.
 
