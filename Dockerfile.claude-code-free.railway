@@ -1,13 +1,26 @@
+# Stage 1: Ensure submodule source is available
+FROM python:3.10-slim AS source
+
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY . .
+RUN if [ ! -f claude-code-free/pyproject.toml ]; then \
+      rm -rf claude-code-free && \
+      git clone --depth 1 https://github.com/Alishahryar1/claude-code-free.git claude-code-free; \
+    fi
+
+# Stage 2: Build
 FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY claude-code-free/pyproject.toml claude-code-free/uv.lock* ./
+COPY --from=source /src/claude-code-free/pyproject.toml /src/claude-code-free/uv.lock* ./
 
 RUN pip install --no-cache-dir uv && \
     uv pip install --system --no-cache -r pyproject.toml
 
-COPY claude-code-free/ .
+COPY --from=source /src/claude-code-free/ .
 
 EXPOSE 8082
 

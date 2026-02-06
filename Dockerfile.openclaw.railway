@@ -1,3 +1,16 @@
+# Stage 1: Ensure submodule source is available
+FROM node:22-bookworm AS source
+
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY . .
+RUN if [ ! -f openclaw/package.json ]; then \
+      rm -rf openclaw && \
+      git clone --depth 1 https://github.com/openclaw/openclaw.git openclaw; \
+    fi
+
+# Stage 2: Build
 FROM node:22-bookworm
 
 # Install Bun (required for build scripts)
@@ -8,20 +21,20 @@ RUN corepack enable
 
 WORKDIR /app
 
-COPY openclaw/package.json openclaw/pnpm-lock.yaml openclaw/pnpm-workspace.yaml openclaw/.npmrc ./
-COPY openclaw/ui/package.json ./ui/package.json
-COPY openclaw/patches ./patches
-COPY openclaw/scripts ./scripts
+COPY --from=source /src/openclaw/package.json /src/openclaw/pnpm-lock.yaml /src/openclaw/pnpm-workspace.yaml /src/openclaw/.npmrc ./
+COPY --from=source /src/openclaw/ui/package.json ./ui/package.json
+COPY --from=source /src/openclaw/patches ./patches
+COPY --from=source /src/openclaw/scripts ./scripts
 
 RUN pnpm install --frozen-lockfile
 
-COPY openclaw/ .
+COPY --from=source /src/openclaw/ .
 RUN OPENCLAW_A2UI_SKIP_MISSING=1 pnpm build
 ENV OPENCLAW_PREFER_PNPM=1
 RUN pnpm ui:build
 
 # Bake config into the image (no bind mount on Railway)
-COPY openclaw-config /openclaw-config
+COPY --from=source /src/openclaw-config /openclaw-config
 
 ENV NODE_ENV=production
 
