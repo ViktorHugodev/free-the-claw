@@ -14,7 +14,7 @@
     }
   },
   "initializeCommand": "git submodule update --init --recursive",
-  "postCreateCommand": "if [ ! -f .env ]; then cp .env.example .env; fi",
+  "postCreateCommand": "if [ ! -f .env ] && [ -f .env.example ]; then cp .env.example .env; fi",
   "secrets": {
     "NVIDIA_NIM_API_KEY": {
       "description": "NVIDIA NIM API key from https://build.nvidia.com/settings/api-keys"
