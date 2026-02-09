@@ -70,6 +70,11 @@ services:
       - TWITTER_CLIENT_SECRET=${TWITTER_CLIENT_SECRET}
       - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
       - TWITTER_REFRESH_TOKEN=${TWITTER_REFRESH_TOKEN}
+      # ComfyUI Cloud: enables video generation scripts
+      - COMFY_UI_API_KEY=${COMFY_UI_API_KEY}
+      # ETH Wallet Private Key: enables smart contract interactions
+      - ETH_WALLET_PRIVATE_KEY=${ETH_WALLET_PRIVATE_KEY}
+
     user: "root"
     volumes:
       - ./openclaw-config:/openclaw-config:ro
@@ -95,8 +100,8 @@ services:
     container_name: radicle-seed
     restart: unless-stopped
     ports:
-      - "8776:8776"   # P2P gossip protocol
-      - "8080:8080"   # HTTP API
+      - "8776:8776" # P2P gossip protocol
+      - "8080:8080" # HTTP API
     volumes:
       - ./radicle-config:/radicle-config:ro
       - radicle-data:/home/radicle/.radicle
