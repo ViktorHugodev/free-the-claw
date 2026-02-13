@@ -29,7 +29,7 @@ COPY --from=source /src/openclaw/scripts ./scripts
 RUN pnpm install --frozen-lockfile
 
 COPY --from=source /src/openclaw/ .
-RUN OPENCLAW_A2UI_SKIP_MISSING=1 pnpm build
+RUN pnpm build
 ENV OPENCLAW_PREFER_PNPM=1
 RUN pnpm ui:build
 
@@ -46,6 +46,7 @@ WORKDIR /app
 
 # Copy only production artifacts
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/openclaw.mjs ./openclaw.mjs
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
@@ -66,4 +67,4 @@ RUN chown -R node:node /app
 # Run as root so entrypoint.sh can chown /home/node/.openclaw (matches docker-compose user: "root")
 ENTRYPOINT ["/bin/sh", "/openclaw-config/entrypoint.sh"]
 # Railway sets PORT env var for public networking; default to 18789 for other environments
-CMD ["sh", "-c", "node dist/index.js gateway --allow-unconfigured --bind lan --port ${PORT:-18789}"]
+CMD ["sh", "-c", "node openclaw.mjs gateway --allow-unconfigured --bind lan --port ${PORT:-18789}"]

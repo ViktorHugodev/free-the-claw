@@ -31,7 +31,7 @@ services:
     command:
       [
         "node",
-        "dist/index.js",
+        "openclaw.mjs",
         "gateway",
         "--allow-unconfigured",
         "--bind",
