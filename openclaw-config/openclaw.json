@@ -25,10 +25,25 @@
       "dangerouslyDisableDeviceAuth": true
     }
   },
+  "tools": {
+    "allow": ["affine"]
+  },
   "agents": {
     "defaults": {
       "model": {
         "primary": "claude-code-free/__MODEL__"
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "affine": {
+        "enabled": true,
+        "config": {
+          "affineUrl": "__AFFINE_URL__",
+          "email": "__AFFINE_AGENT_EMAIL__",
+          "password": "__AFFINE_AGENT_PASSWORD__"
+        }
       }
     }
   }

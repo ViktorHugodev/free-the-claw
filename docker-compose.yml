@@ -49,12 +49,18 @@ services:
     restart: unless-stopped
     depends_on:
       - claude-code-free
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "18789:18789"
       - "18790:18790"
     environment:
       - HOME=/home/node
       - TERM=xterm-256color
+      # AFFiNE agent credentials (for doc read/write tools)
+      - AFFINE_URL=${AFFINE_URL:-http://host.docker.internal:3010}
+      - AFFINE_AGENT_EMAIL=${AFFINE_AGENT_EMAIL:-paul@affine.local}
+      - AFFINE_AGENT_PASSWORD=${AFFINE_AGENT_PASSWORD:-AffinePaul123}
       # Model name (auto-synced from .env for accurate display)
       - MODEL=${MODEL:-stepfun-ai/step-3.5-flash}
       # API key passed to openclaw config (can be any non-empty value for the proxy)

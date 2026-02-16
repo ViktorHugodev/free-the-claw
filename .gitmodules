@@ -1,9 +1,12 @@
 [submodule "claude-code-free"]
 	path = claude-code-free
-	url = https://github.com/Alishahryar1/claude-code-free.git
+	url = https://github.com/potnoodledev/claude-code-free.git
+	branch = fix/python-syntax
 [submodule "openclaw"]
 	path = openclaw
-	url = https://github.com/openclaw/openclaw.git
+	url = https://github.com/potnoodledev/openclaw.git
+	branch = affine-extension
 [submodule "AFFiNE"]
 	path = AFFiNE
-	url = https://github.com/toeverything/AFFiNE.git
+	url = https://github.com/potnoodledev/AFFiNE.git
+	branch = zed-collab-auth

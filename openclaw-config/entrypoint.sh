@@ -2,6 +2,9 @@
 # Copy config files into the named volume, replacing __MODEL__ placeholder
 sed -e "s|__MODEL__|${MODEL:-moonshotai/kimi-k2-thinking}|g" \
     -e "s|__PROXY_URL__|${PROXY_URL:-http://claude-code-free:8082}|g" \
+    -e "s|__AFFINE_URL__|${AFFINE_URL:-http://host.docker.internal:3010}|g" \
+    -e "s|__AFFINE_AGENT_EMAIL__|${AFFINE_AGENT_EMAIL:-paul@affine.local}|g" \
+    -e "s|__AFFINE_AGENT_PASSWORD__|${AFFINE_AGENT_PASSWORD:-AffinePaul123}|g" \
     /openclaw-config/openclaw.json \
   > /home/node/.openclaw/openclaw.json 2>/dev/null || true
 

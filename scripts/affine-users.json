@@ -1,0 +1,4 @@
+[
+  {"name": "Admin", "email": "admin@affine.local", "password": "AffineAdmin123", "admin": true},
+  {"name": "Paul", "email": "paul@affine.local", "password": "AffinePaul123"}
+]
