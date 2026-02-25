@@ -7,7 +7,7 @@ WORKDIR /src
 COPY . .
 RUN if [ ! -f claude-code-free/pyproject.toml ]; then \
       rm -rf claude-code-free && \
-      git clone --depth 1 https://github.com/Alishahryar1/claude-code-free.git claude-code-free; \
+              git clone --depth 1 https://github.com/potnoodledev/claude-code-free.git claude-code-free; \
     fi
 
 # Stage 2: Build
